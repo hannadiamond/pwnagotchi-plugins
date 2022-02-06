@@ -22,7 +22,6 @@ class Age(plugins.Plugin):
 
     def on_loaded(self):
         log_path = '/var/log/pwnagotchi.log'
-        # log_path = pwnagotchi.config['main']['log']['path']
         self.load_logs(log_path)
 
 

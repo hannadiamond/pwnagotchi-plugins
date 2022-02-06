@@ -18,7 +18,8 @@ A plugin that will add a battery capacity and charging indicator for the Wavesha
 
 # Age Plugin
 A plugin that adds age and strength stats based on the number of epochs and the number of epochs trained.
-Whenever your pwnagotchi has lived through anouther 100 epochs or epochs trained, a new status will appear!
+Whenever your pwnagotchi has lived through another 100 epochs or epochs trained, a new status will appear!
+ ![Age](images/age.jpg)
 
 ## Setup
 1. Copy over `age.py` into your custom plugins directory
