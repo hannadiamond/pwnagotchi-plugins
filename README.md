@@ -16,3 +16,12 @@ A plugin that will add a battery capacity and charging indicator for the Wavesha
 2. In your `config.toml` file, add the line `main.plugins.ups_hat_c.enabled = true`
 3. Restart your device to see your new indicator!
 
+# Age Plugin
+A plugin that adds age and strength stats based on the number of epochs and the number of epochs trained.
+Whenever your pwnagotchi has lived through anouther 100 epochs or epochs trained, a new status will appear!
+
+## Setup
+1. Copy over `age.py` into your custom plugins directory
+2. In your `config.toml` file, add the line `main.plugins.age.enabled = true`
+3. Restart your device to see your new stats!
+
