@@ -53,19 +53,21 @@ class Age(plugins.Plugin):
             self.age_checkpoint(agent)
 
     def abrev_number(self, num):
-        num = float('{:.2g}'.format(num))
-        magnitude = 0
-        while abs(num) >= 1000:
-            magnitude += 1
-            num /= 1000.0
-        return '{}{}'.format('{:f}'.format(num).rstrip('0').rstrip('.'), ['', 'K', 'M', 'B', 'T'][magnitude])
+        if num < 1000:
+            return str(num)
+        else:
+            magnitude = 0
+            while abs(num) >= 1000:
+                magnitude += 1
+                num /= 1000.0
+                abbr = ['', 'K', 'M', 'B', 'T', 'P'][magnitude]
+            return '{}{}'.format('{:f}'.format(num).rstrip('0').rstrip('.'), abbr)
 
     def age_checkpoint(self, agent):
         view = agent.view()
         view.set('face', faces.HAPPY)
         view.set('status', "Wow, I've lived for " + str(self.abrev_number(self.epochs)) + " epochs!")
         view.update(force=True)
-        time.sleep(3)
 
     def strength_checkpoint(self, agent):
         view = agent.view()
@@ -73,7 +75,6 @@ class Age(plugins.Plugin):
         view.set('status', "Look at my strength go up! \n"
                            "I've trained for " + str(self.abrev_number(self.train_epochs)) + " epochs")
         view.update(force=True)
-        time.sleep(3)
 
     def load_logs(self, log_path):
         if os.path.exists(log_path):
