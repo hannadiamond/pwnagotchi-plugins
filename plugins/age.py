@@ -28,7 +28,7 @@ class Age(plugins.Plugin):
     def on_ui_setup(self, ui):
         ui.add_element('Age', LabeledValue(color=BLACK, label='Age', value='0', position=(ui.width() / 2 - 125, 32),
                                            label_font=fonts.Bold, text_font=fonts.Medium))
-        ui.add_element('Strength', LabeledValue(color=BLACK, label='Str', value='0', position=(ui.width() / 2 - 77, 32),
+        ui.add_element('Strength', LabeledValue(color=BLACK, label='Str', value='0', position=(ui.width() / 2 - 70, 32),
                                            label_font=fonts.Bold, text_font=fonts.Medium))
 
     def on_unload(self, ui):
