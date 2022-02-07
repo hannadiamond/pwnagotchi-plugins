@@ -52,7 +52,7 @@ class Age(plugins.Plugin):
             self.age_checkpoint(agent)
 
     def abrev_number(self, num):
-        if num < 1000:
+        if num < 100000:
             return str(num)
         else:
             magnitude = 0
