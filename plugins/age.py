@@ -1,5 +1,5 @@
-import time
 import os
+import json
 import logging
 
 import pwnagotchi
@@ -21,14 +21,14 @@ class Age(plugins.Plugin):
         self.train_epochs = 0
 
     def on_loaded(self):
-        log_path = '/var/log/pwnagotchi.log'
-        self.load_logs(log_path)
+        data_path = '/root/brain.json'
+        self.load_data(data_path)
 
 
     def on_ui_setup(self, ui):
-        ui.add_element('Age', LabeledValue(color=BLACK, label='Age', value='0', position=(ui.width() / 2 + 5, 81),
+        ui.add_element('Age', LabeledValue(color=BLACK, label='Age', value='0', position=(ui.width() / 2 - 125, 32),
                                            label_font=fonts.Bold, text_font=fonts.Medium))
-        ui.add_element('Strength', LabeledValue(color=BLACK, label='Str', value='0', position=(ui.width() / 2 + 50, 81),
+        ui.add_element('Strength', LabeledValue(color=BLACK, label='Str', value='0', position=(ui.width() / 2 - 77, 32),
                                            label_font=fonts.Bold, text_font=fonts.Medium))
 
     def on_unload(self, ui):
@@ -60,7 +60,7 @@ class Age(plugins.Plugin):
                 magnitude += 1
                 num /= 1000.0
                 abbr = ['', 'K', 'M', 'B', 'T', 'P'][magnitude]
-            return '{}{}'.format('{:f}'.format(num).rstrip('0').rstrip('.'), abbr)
+            return '{}{}'.format('{:.2f}'.format(num).rstrip('0').rstrip('.'), abbr)
 
     def age_checkpoint(self, agent):
         view = agent.view()
@@ -75,18 +75,10 @@ class Age(plugins.Plugin):
                            "I've trained for " + str(self.abrev_number(self.train_epochs)) + " epochs")
         view.update(force=True)
 
-    def load_logs(self, log_path):
-        if os.path.exists(log_path):
-            with open(log_path, encoding="utf-8") as fp:
-                for line in fp:
-                    line = line.strip()
-                    if line != "" and line[0] != '[':
-                        continue
-                    parts = line.split(']')
-                    if len(parts) < 2:
-                        continue
-                    if ' training epoch ' in line:
-                        self.train_epochs += 1
-                    if '[epoch ' in line:
-                        self.epochs += 1
+    def load_data(self, data_path):
+        if os.path.exists(data_path):
+            with open(data_path) as f:
+                data = json.load(f)
+                self.epochs = data['epochs_lived']
+                self.train_epochs = data['epochs_trained']
 
