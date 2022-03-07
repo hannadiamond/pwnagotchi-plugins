@@ -95,7 +95,7 @@ class UPS:
 
 class UPSC(plugins.Plugin):
     __author__ = 'HannaDiamond'
-    __version__ = '1.0.0'
+    __version__ = '1.0.1'
     __license__ = 'MIT'
     __description__ = 'A plugin that will add a battery capacity and charging indicator for the UPS HAT C'
 
@@ -106,8 +106,16 @@ class UPSC(plugins.Plugin):
         self.ups = UPS()
 
     def on_ui_setup(self, ui):
-        ui.add_element('ups', LabeledValue(color=BLACK, label='BAT', value='0%', position=(ui.width() / 2 + 15, 0),
-                                           label_font=fonts.Bold, text_font=fonts.Medium))
+        if self.options["label_on"]:
+            ui.add_element('ups', LabeledValue(color=BLACK, label='BAT', value="--%",
+                                               position=(int(self.options["bat_x_coord"]),
+                                                         int(self.options["bat_y_coord"])),
+                                               label_font=fonts.Bold, text_font=fonts.Medium))
+        else:
+            ui.add_element('ups', LabeledValue(color=BLACK, label='', value="--%",
+                                               position=(int(self.options["bat_x_coord"]),
+                                                         int(self.options["bat_y_coord"])),
+                                               label_font=fonts.Bold, text_font=fonts.Medium))
 
     def on_unload(self, ui):
         with ui._lock:
@@ -120,8 +128,8 @@ class UPSC(plugins.Plugin):
         if (capacity < 0): capacity = 0
 
         charging = self.ups.getCurrent_mA()
-
         ui.set('ups', str(capacity) + "%" + charging)
+
         if capacity <= self.options['shutdown']:
             logging.info('[ups_hat_c] Empty battery (<= %s%%): shutting down' % self.options['shutdown'])
             ui.update(force=True, new_data={'status': 'Battery exhausted, bye ...'})
