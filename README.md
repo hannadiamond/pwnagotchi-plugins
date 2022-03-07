@@ -18,7 +18,7 @@ A plugin that will add a battery capacity and charging indicator for the Wavesha
 main.plugins.ups_hat_c.enabled = true
 main.plugins.ups_hat_c.label_on = true  # show BAT label or just percentage
 main.plugins.ups_hat_c.shutdown = 5  # battery percent at which the device will turn off
-main.plugins.ups_hat_c.bat_x_coord = 15
+main.plugins.ups_hat_c.bat_x_coord = 140
 main.plugins.ups_hat_c.bat_y_coord = 0
 ```
 3. Restart your device to see your new indicator!
@@ -33,9 +33,9 @@ Whenever your pwnagotchi has lived through another 100 epochs or epochs trained,
 2. In your `config.toml` file add:
 ```toml
 main.plugins.age.enabled = true
-main.plugins.age.age_x_coord = -125
+main.plugins.age.age_x_coord = 0
 main.plugins.age.age_y_coord = 32
-main.plugins.age.str_x_coord = -70
+main.plugins.age.str_x_coord = 67
 main.plugins.age.str_y_coord = 32
 ```
 3. Restart your device to see your new stats!
