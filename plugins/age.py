@@ -11,7 +11,6 @@ from pwnagotchi.ui.components import LabeledValue
 from pwnagotchi.ui.view import BLACK
 
 DATA_PATH = '/root/brain.json'
-LAST_SESSION_FILE = '/root/.pwnagotchi-last-session'
 
 class Age(plugins.Plugin):
     __author__ = 'HannaDiamond'
@@ -43,8 +42,8 @@ class Age(plugins.Plugin):
             ui.remove_element('Int')
 
     def on_ui_update(self, ui):
-        ui.set('Age', str(self.calculate_device_age())
-        ui.set('Int', str(self.abrev_number(self.train_epochs)))
+        ui.set('Age', "%s" % self.calculate_device_age())
+        ui.set('Int', "%s" % self.abrev_number(self.train_epochs))
 
 
     def on_ai_training_step(self, agent, _locals, _globals):
@@ -53,7 +52,7 @@ class Age(plugins.Plugin):
             self.intelligence_checkpoint(agent)
             self.age_checkpoint(agent)
 
-    def abrev_nuber(self, num):
+    def abrev_number(self, num):
         if num < 100000:
             return str(num)
         else:
@@ -73,8 +72,8 @@ class Age(plugins.Plugin):
     def intelligence_checkpoint(self, agent):
         view = agent.view()
         view.set('face', faces.MOTIVATED)
-        view.set('status', "Look at my intelligence go up! \n"
-                           "I've trained for " + str(self.abrev_number(self.train_epochs)) + " epochs")
+        view.set('status', "Look at my intelligence go up! \n" \
+                "I've trained for " + self.abrev_number(self.train_epochs) + " epochs")
         view.update(force=True)
 
     def calculate_device_age(self):
@@ -86,18 +85,17 @@ class Age(plugins.Plugin):
         months = remaining_days // 30
         days = remaining_days % 30
 
-        age_str = f'{years}y {months}m {days}d'
-        return age_str
+        age_str = ""
+        if years != 0:
+            age_str = f'{years}y'
+        if months != 0:
+            age_str = f'{age_str} {months}m'
+        age_str = f'{age_str} {days}d'
 
-    def _parse_datetime(self, dt):
-        dt = dt.split('.')[0]
-        dt = dt.split(',')[0]
-        dt = datetime.strptime(dt.split('.')[0], '%Y-%m-%d %H:%M:%S')
-        return time.mktime(dt.timetuple())
+        return age_str
 
     def load_data(self):
         if os.path.exists(DATA_PATH):
             with open(DATA_PATH) as f:
                 data = json.load(f)
                 self.train_epochs = data['epochs_trained']
-
