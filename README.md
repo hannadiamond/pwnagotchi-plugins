@@ -4,6 +4,23 @@
 If you have not set up a directory for custom plugins, create the directory and add its path to your config.toml.
 `main.custom_plugins = "/usr/local/share/pwnagotchi/custom-plugins/"`
 
+# Age Plugin
+A plugin that adds age and int stats based on the the time training and the number of epochs trained.
+Whenever your pwnagotchi has lived through another 100 epochs or epochs trained, a new status will appear!
+ ![Age](images/age.jpg)
+
+## Setup
+1. Copy over `age.py` into your custom plugins directory
+2. In your `config.toml` file add:
+```toml
+main.plugins.age.enabled = true
+main.plugins.age.age_x_coord = 0
+main.plugins.age.age_y_coord = 32
+main.plugins.age.int_x_coord = 67
+main.plugins.age.int_y_coord = 32
+```
+3. Restart your device to see your new stats!
+
 # UPS HAT (C) Plugin
 A plugin that will add a battery capacity and charging indicator for the Waveshare UPS HAT (C)
  ![UPS Hat C](images/ups_hat_c.jpg)
@@ -22,24 +39,6 @@ main.plugins.ups_hat_c.bat_x_coord = 140
 main.plugins.ups_hat_c.bat_y_coord = 0
 ```
 3. Restart your device to see your new indicator!
-
-# Age Plugin
-A plugin that adds age and int stats based on the the time training and the number of epochs trained.
-Whenever your pwnagotchi has lived through another 100 epochs or epochs trained, a new status will appear!
- ![Age](images/age.jpg)
-
-## Setup
-1. Copy over `age.py` into your custom plugins directory
-2. In your `config.toml` file add:
-```toml
-main.plugins.age.enabled = true
-main.plugins.age.age_x_coord = 0
-main.plugins.age.age_y_coord = 32
-main.plugins.age.int_x_coord = 67
-main.plugins.age.int_y_coord = 32
-```
-3. Restart your device to see your new stats!
-
 
 # Waveshare 3.7 Inch Display 
 
