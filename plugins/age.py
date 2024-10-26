@@ -90,7 +90,10 @@ class Age(plugins.Plugin):
             age_str = f'{years}y'
         if months != 0:
             age_str = f'{age_str} {months}m'
-        age_str = f'{age_str} {days}d'
+        if len(age_str) !=0 :
+            age_str = f'{age_str} {days}d'
+        else:
+            age_str = f'{days}d'
 
         return age_str
 
