@@ -4,10 +4,9 @@ import pwnagotchi.ui.fonts as fonts
 from pwnagotchi.ui.hw.base import DisplayImpl
 
 
-class Waveshare37inch(DisplayImpl):
+class Waveshare3in7(DisplayImpl):
     def __init__(self, config):
-        super(Waveshare37inch, self).__init__(config, 'waveshare37inch')
-        self._display = None
+        super(Waveshare3in7, self).__init__(config, 'waveshare3in7')
 
     def layout(self):
         fonts.setup(20, 19, 20, 45, 35, 19)
@@ -32,11 +31,11 @@ class Waveshare37inch(DisplayImpl):
         return self._layout
 
     def initialize(self):
-        logging.info("initializing waveshare v1 3.7 inch display")
-        from pwnagotchi.ui.hw.libs.waveshare.v37inch.epd3in7 import EPD
+        logging.info("initializing waveshare 3.7 inch lcd display")
+        from pwnagotchi.ui.hw.libs.waveshare.epaper.v3in7.epd3in7 import EPD
         self._display = EPD()
         self._display.init(0)
-        self._display.Clear(0xFF, 0)
+        self._display.Clear(0)
         self._display.init(1)  # 1Gray mode
 
     def render(self, canvas):
@@ -44,4 +43,4 @@ class Waveshare37inch(DisplayImpl):
         self._display.display_1Gray(buf)
 
     def clear(self):
-        self._display.Clear(0xFF, 1)
+        self._display.Clear(0)
