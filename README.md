@@ -24,7 +24,7 @@ main.plugins.ups_hat_c.bat_y_coord = 0
 3. Restart your device to see your new indicator!
 
 # Age Plugin
-A plugin that adds age and strength stats based on the number of epochs and the number of epochs trained.
+A plugin that adds age and int stats based on the the time training and the number of epochs trained.
 Whenever your pwnagotchi has lived through another 100 epochs or epochs trained, a new status will appear!
  ![Age](images/age.jpg)
 
@@ -35,8 +35,8 @@ Whenever your pwnagotchi has lived through another 100 epochs or epochs trained,
 main.plugins.age.enabled = true
 main.plugins.age.age_x_coord = 0
 main.plugins.age.age_y_coord = 32
-main.plugins.age.str_x_coord = 67
-main.plugins.age.str_y_coord = 32
+main.plugins.age.int_x_coord = 67
+main.plugins.age.int_y_coord = 32
 ```
 3. Restart your device to see your new stats!
 
@@ -44,21 +44,9 @@ main.plugins.age.str_y_coord = 32
 # Waveshare 3.7 Inch Display 
 
 ## Setup
-1. Create a new folder `/usr/local/lib/python3.7/dist-packages/pwnagotchi/ui/hw/libs/waveshare/v37inch`
-2. Copy the contents of `waveshare_37inch/v37inch` into that new folder
-3. Copy `waveshare37inch.py` into `/usr/local/lib/python3.7/dist-packages/pwnagotchi/ui/hw`
-4. In the `config.toml` set `ui.display.type = "waveshare37inch"`
-5. In `/usr/local/lib/python3.7/dist-packages/pwnagotchi/utils.py` in `def load_config` add:
-```python
-elif config['ui']['display']['type'] in ('ws_37inch', 'ws37inch', 'waveshare_37inch', 'waveshare37inch'):
-    config['ui']['display']['type'] = 'waveshare37inch'
-```
-6. In `/usr/local/lib/python3.7/dist-packages/pwnagotchi/ui/display.py` add:
-```python
-def is_waveshare37inch(self):
-   return self.implementation.name =='waveshare37inch'
-```
-7. In `/usr/local/lib/python3.7/dist-packages/pwnagotchi/ui/components.py` in the `class LabeledValue`, replace `def draw` with
+3. Copy `waveshare3in7.py` into `/usr/local/lib/python3.11/dist-packages/pwnagotchi/ui/hw`
+4. In the `config.toml` set `ui.display.type = "waveshare3in7"`
+5. In `/usr/local/lib/python3.11/dist-packages/pwnagotchi/ui/components.py` in the `class LabeledValue`, replace `def draw` with
 ```python
     def draw(self, canvas, drawer):
         if self.label is None:
@@ -67,13 +55,4 @@ def is_waveshare37inch(self):
             pos = self.xy
             drawer.text(pos, self.label, font=self.label_font, fill=self.color)
             drawer.text((pos[0] + self.label_spacing + self.label_font.getsize(self.label)[0], pos[1]), self.value, font=self.text_font, fill=self.color)
-```
-8. In `/usr/local/lib/python3.7/dist-packages/pwnagotchi/ui/hw/__init__.py` add: 
-```python
-    from pwnagotchi.ui.hw.waveshare37inch import Waveshare37inch
- ```
-and add in the elif block of code
-```python
-elif config['ui']['display']['type'] == 'waveshare37inch':
-    return Waveshare37inch(config)
 ```
